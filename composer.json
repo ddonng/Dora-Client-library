@@ -1,0 +1,24 @@
+{
+    "name": "ddonng/dora-client-library",
+    "type": "library",
+    "description": "For special use",
+    "keywords": ["dora-rpc","client"],
+    "homepage": "https://github.com/ddonng/Dora-Client-library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Xiaodong Huang",
+            "email": "ddonng@163.com",
+            "homepage": "http://blog.esch.cn"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.30",
+        "xcl3721/dora-rpc": "=0.4.9"
+    },
+    "autoload": {
+        "psr-4": {
+          "DoraClient\\": "src"
+        }
+    }
+}
