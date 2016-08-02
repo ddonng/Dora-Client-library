@@ -111,6 +111,17 @@ class Library
         return $this->extract_res($result);
     }
 
+    public function getTokenDetail($token)
+    {
+        $this->setGroup("oauth_group");
+        $result = self::$client->singleAPI(
+            "getTokenDetail",
+            array("token"=>$token),
+            \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
+        );
+
+        return $this->extract_res($result);
+    }
 
 
 
