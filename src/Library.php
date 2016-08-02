@@ -13,7 +13,7 @@ class Library
 
     private function extract_res($result)
     {
-        
+
         return $result['data']['data']['data'];
     }
 
@@ -29,7 +29,7 @@ class Library
         $this->setGroup("core_group");
         $result = self::$client->singleAPI(
             "checkLoginName",
-            array("login_type"=>$loginType,"login_name"=>$loginName),
+            array("loginType"=>$loginType,"loginName"=>$loginName),
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1);
         return $this->extract_res($result);
     }
