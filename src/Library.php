@@ -13,7 +13,7 @@ class Library
 
     private function extract_res($result)
     {
-
+        
         return $result['data']['data']['data'];
     }
 
@@ -31,7 +31,7 @@ class Library
             "checkLoginName",
             array("login_type"=>$loginType,"login_name"=>$loginName),
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1);
-        return extract_res($result);
+        return $this->extract_res($result);
     }
 
     public function checkUserLoginInfo($loginType,$loginName,$passwd)
@@ -42,7 +42,7 @@ class Library
             "checkUserLoginInfo",
             array("loginType"=>$loginType,"loginName"=>$loginName,"password"=>$passwd),
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1);
-        return extract_res($result);
+        return $this->extract_res($result);
     }
 
     public function getUserById($userId)
@@ -55,7 +55,7 @@ class Library
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
 
-        return extract_res($result);
+        return $this->extract_res($result);
 
     }
 
@@ -69,7 +69,7 @@ class Library
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
 
-        return extract_res($result);
+        return $this->extract_res($result);
     }
 
     public function updateUser($user)
@@ -82,7 +82,7 @@ class Library
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
 
-        return extract_res($result);
+        return $this->extract_res($result);
 
     }
 
@@ -95,10 +95,10 @@ class Library
             array("user_id"=>$userId),
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
-        return extract_res($result);
+        return $this->extract_res($result);
     }
 
-    public function getUsers($fields)
+    public function getUsers($fields="")
     {
         $this->setGroup("core_group");
 
@@ -108,7 +108,7 @@ class Library
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
 
-        return extract_res($result);
+        return $this->extract_res($result);
     }
 
 
