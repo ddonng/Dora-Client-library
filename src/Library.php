@@ -151,6 +151,7 @@ class Library
      *     "to" => array('test@ifaxin.com'),
      *     "sub" => array("%user_name%" => Array('123456'))
      * )
+     *
 	 */
 
     public function sendEmail($templateName,$vars = array())
