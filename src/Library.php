@@ -139,7 +139,7 @@ class Library
                 "content_keys"=>$content_keys,
                 "sign"=>$sign,
             ),
-            \DoraRPC\DoraConst::SW_MODE_WAITRESULT
+            \DoraRPC\DoraConst::SW_MODE_ASYNCRESULT
         );
 
         return $this->extract_res($result);
@@ -151,7 +151,7 @@ class Library
      *     "to" => array('test@ifaxin.com'),
      *     "sub" => array("%user_name%" => Array('123456'))
      * )
-     *
+     * 此为async
 	 */
 
     public function sendEmail($templateName,$vars = array())
@@ -164,7 +164,7 @@ class Library
                 "templateName"=>$templateName,
                 "email_vars" =>$vars
             ),
-            \DoraRPC\DoraConst::SW_MODE_WAITRESULT,1
+            \DoraRPC\DoraConst::SW_MODE_ASYNCRESULT,1
         );
 
         return $this->extract_res($result);
