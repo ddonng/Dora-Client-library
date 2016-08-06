@@ -111,6 +111,8 @@ class Library
         return $this->extract_res($result);
     }
 
+/*********************** OAuth2 Group ************/
+
     public function getTokenDetail($token)
     {
         $this->setGroup("oauth_group");
@@ -118,6 +120,50 @@ class Library
             "getTokenDetail",
             array("token"=>$token),
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
+        );
+
+        return $this->extract_res($result);
+    }
+
+
+/*********************** Message Group ************/
+
+    public function sendSMS($mobile_phone, $type, $content_keys, $sign="")
+    {
+        $this->setGroup("msg_group");
+        $result = self::$client->singleAPI(
+            "sendSMS",
+            array(
+                "mobile_phone"=>$mobile_phone,
+                "type"=>$type,
+                "content_keys"=>$content_keys,
+                "sign"=>$sign,
+            ),
+            \DoraRPC\DoraConst::SW_MODE_WAITRESULT
+        );
+
+        return $this->extract_res($result);
+    }
+
+    /**
+     * Array vars:
+     * array(
+     *     "to" => array('test@ifaxin.com'),
+     *     "sub" => array("%user_name%" => Array('123456'))
+     * )
+	 */
+
+    public function sendEmail($templateName,$vars = array())
+    {
+        $this->setGroup("msg_group");
+
+        $result = self::$client->singleAPI(
+            "sendEmail",
+            array(
+                "templateName"=>$templateName,
+                "email_vars" =>$vars
+            ),
+            \DoraRPC\DoraConst::SW_MODE_WAITRESULT,1
         );
 
         return $this->extract_res($result);
