@@ -10,11 +10,23 @@ class Library
         self::$client = new \DoraRPC\Client($config);
     }
 
-
-    private function extract_res($result)
+    //
+    private function extract_sync_res($result)
     {
-
         return $result['data']['data']['data'];
+    }
+
+    private function extract_async_status($result)
+    {
+        if($result['code']=='0'){
+            $code = $result['data']['code'];
+            if($code == 100001 )
+            {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     private function setGroup($group)
@@ -31,7 +43,7 @@ class Library
             "checkLoginName",
             array("loginType"=>$loginType,"loginName"=>$loginName),
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1);
-        return $this->extract_res($result);
+        return $this->extract_sync_res($result);
     }
 
     public function checkUserLoginInfo($loginType,$loginName,$passwd)
@@ -42,7 +54,7 @@ class Library
             "checkUserLoginInfo",
             array("loginType"=>$loginType,"loginName"=>$loginName,"password"=>$passwd),
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1);
-        return $this->extract_res($result);
+        return $this->extract_sync_res($result);
     }
 
     public function getUserById($userId)
@@ -55,7 +67,7 @@ class Library
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
 
-        return $this->extract_res($result);
+        return $this->extract_sync_res($result);
 
     }
 
@@ -69,7 +81,7 @@ class Library
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
 
-        return $this->extract_res($result);
+        return $this->extract_sync_res($result);
     }
 
     public function updateUser($user)
@@ -82,7 +94,7 @@ class Library
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
 
-        return $this->extract_res($result);
+        return $this->extract_sync_res($result);
 
     }
 
@@ -95,7 +107,7 @@ class Library
             array("user_id"=>$userId),
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
-        return $this->extract_res($result);
+        return $this->extract_sync_res($result);
     }
 
     public function getUsers($fields="")
@@ -108,7 +120,7 @@ class Library
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
 
-        return $this->extract_res($result);
+        return $this->extract_sync_res($result);
     }
 
 /*********************** OAuth2 Group ************/
@@ -122,7 +134,7 @@ class Library
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
 
-        return $this->extract_res($result);
+        return $this->extract_sync_res($result);
     }
 
 
@@ -139,10 +151,10 @@ class Library
                 "content_keys"=>$content_keys,
                 "sign"=>$sign,
             ),
-            \DoraRPC\DoraConst::SW_MODE_ASYNCRESULT
+            \DoraRPC\DoraConst::SW_MODE_NORESULT
         );
 
-        return $this->extract_res($result);
+        return $this->extract_async_status($result);
     }
 
     /**
@@ -164,10 +176,10 @@ class Library
                 "templateName"=>$templateName,
                 "email_vars" =>$vars
             ),
-            \DoraRPC\DoraConst::SW_MODE_ASYNCRESULT,1
+            \DoraRPC\DoraConst::SW_MODE_NORESULT
         );
 
-        return $this->extract_res($result);
+        return $this->extract_async_status($result);
     }
 
 
