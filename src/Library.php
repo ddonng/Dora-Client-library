@@ -123,6 +123,81 @@ class Library
         return $this->extract_sync_res($result);
     }
 
+    public function getInstitutions()
+    {
+        $this->setGroup("core_group");
+        $result = self::$client->singleAPI(
+            "getInstitutions",array(),
+            \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
+        );
+        return $this->extract_sync_res($result);
+    }
+
+    public function getDepartments()
+    {
+        $this->setGroup("core_group");
+        $result = self::$client->singleAPI(
+            "getDepartments",array(),
+            \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
+        );
+        return $this->extract_sync_res($result);
+    }
+
+    public function getInstitutionById($institution_id)
+    {
+        $this->setGroup("core_group");
+        $result = self::$client->singleAPI(
+            "getInstitutionById",
+            array("institution_id"=>$institution_id),
+            \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
+        );
+        return $this->extract_sync_res($result);
+    }
+
+    public function getDepartmentById($department_id)
+    {
+        $this->setGroup("core_group");
+        $result = self::$client->singleAPI(
+            "getDepartmentById",
+            array("department_id"=>$department_id),
+            \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
+        );
+        return $this->extract_sync_res($result);
+    }
+
+    public function addInstitution($institution_name,$institution_desc="")
+    {
+        $this->setGroup("core_group");
+
+        $param = array();
+        $param['institution_name'] = $institution_name;
+        if($institution_desc !=''){
+            $param['institution_desc'] = $institution_desc;
+        }
+
+        $result = self::$client->singleAPI(
+            "addInstitution", $param,
+            \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
+        );
+        return $this->extract_sync_res($result);
+    }
+
+    public function addDepartment($department_name,$institution_id,$department_desc='')
+    {
+        $this->setGroup("core_group");
+        $param = array();
+        $param['department_name'] = $department_name;
+        $param['institution_id'] = $institution_id;
+        if($department_desc !=''){
+            $param['department_desc'] = $department_desc;
+        }
+        $result = self::$client->singleAPI(
+            "addDepartment",$param
+            \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
+        );
+        return $this->extract_sync_res($result);
+    }
+
 /*********************** OAuth2 Group ************/
 
     public function getTokenDetail($token)
