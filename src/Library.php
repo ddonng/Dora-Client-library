@@ -192,7 +192,7 @@ class Library
             $param['department_desc'] = $department_desc;
         }
         $result = self::$client->singleAPI(
-            "addDepartment",$param
+            "addDepartment",$param,
             \DoraRPC\DoraConst::SW_MODE_WAITRESULT, 1
         );
         return $this->extract_sync_res($result);
