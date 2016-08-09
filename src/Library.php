@@ -13,17 +13,27 @@ class Library
     //
     private function extract_sync_res($result)
     {
+
         return $result['data']['data']['data'];
     }
 
     private function extract_async_status($result)
     {
         if($result['code']=='0'){
-            $code = $result['data']['code'];
-            if($code == 100001 )
+            //异常错误
+// Warning: swoole_client::recv(): recv() failed. Error: Resource temporarily unavailable [11] in /var/www/html/vendor/xcl3721/dora-rpc/src/Client.php on line 515
+// array(3) { ["code"]=> int(0) ["msg"]=> string(2) "OK" ["data"]=> array(1) { ["97666928f23cd82301051df4e58e2c3f"]=> array(3) { ["code"]=> int(100009) ["msg"]=> string(27) "the recive wrong or timeout" ["data"]=> array(0) { } } } }
+            if(!isset($result['data']['code']))
             {
-                return true;
+                var_export($result['data']);
+            }else{
+                $code = $result['data']['code'];
+                if($code == 100001 )
+                {
+                    return true;
+                }
             }
+
         }
         return false;
 
