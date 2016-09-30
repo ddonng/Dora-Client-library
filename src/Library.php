@@ -267,6 +267,61 @@ class Library
         return $this->extract_async_status($result);
     }
 
+    public function async_htmltopdf($type,$url,$fileName='')
+    {
+        $this->setGroup("pdf_group");
+        if($fileName == '')
+            $fileName = time().\Phalcon\Text::random(\Phalcon\Text::RANDOM_NUMERIC,4);
+        $category = date("Y")."/".date("m");
+        $result = self::$client->singleAPI(
+            "async_htmltopdf",
+            array(
+                "url"=>$url,
+                "type"=>$type,
+                "category"=>$category,  //not need slash /
+                "fileName"=>$fileName
+            ),
+            \DoraRPC\DoraConst::SW_MODE_NORESULT
+        );
 
+        $stat = $this->extract_async_status($result);
+        if($stat){
+            //发送成功，返回uri
+            $uri = $type . "/pdf/" . $category . "/" . $fileName;
+            return $uri;
+        }else{
+            return false;
+        }
+    }
+
+    public function async_htmltoimage($type,$url,$fileName='')
+    {
+        $this->setGroup("pdf_group");
+        if($fileName == '')
+            $fileName = time().\Phalcon\Text::random(\Phalcon\Text::RANDOM_NUMERIC,4);
+
+        $category = date("Y")."/".date("m");
+        $result = self::$client->singleAPI(
+            "async_htmltoimage",
+            array(
+                "url"=>$url,
+                "type"=>$type,
+                "category"=>$category,  //not need slash /
+                "fileName"=>$fileName
+            ),
+            \DoraRPC\DoraConst::SW_MODE_NORESULT
+        );
+
+        $stat = $this->extract_async_status($result);
+        if($stat){
+            //发送成功，返回uri
+            $uri = $type . "/image/" . $category . "/" . $fileName;
+            return $uri;
+        }else{
+            return false;
+        }
+
+
+    }
 
 }
