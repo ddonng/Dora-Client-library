@@ -13,12 +13,13 @@ class Library
     //
     private function extract_sync_res($result)
     {
-
+        // return $result;
         return $result['data']['data']['data'];
     }
 
     private function extract_async_status($result)
     {
+        // return $result;
         if($result['code']=='0'){
             //异常错误
 // Warning: swoole_client::recv(): recv() failed. Error: Resource temporarily unavailable [11] in /var/www/html/vendor/xcl3721/dora-rpc/src/Client.php on line 515
@@ -323,5 +324,43 @@ class Library
 
 
     }
+
+    /**
+ 	 * 同步方式的文档转换,文档会转换后直接存放与源文件同目录
+ 	 * @param extension 文档的拓展名，doc或docx
+	 */
+     public function async_doctopdf($extension,$relativePath,$fileName)
+     {
+         $this->setGroup("pdf_group");
+         $result = self::$client->singleAPI(
+             "async_doctopdf",
+             array(
+                 "extension"=>$extension,
+                 'relativePath'=>$relativePath,
+                 'fileName'=>$fileName
+             ),
+             \DoraRPC\DoraConst::SW_MODE_NORESULT
+         );
+
+         return $this->extract_async_status($result);
+
+     }
+
+     public function sync_doctopdf($extension,$relativePath,$fileName)
+     {
+         $this->setGroup("pdf_group");
+         $result = self::$client->singleAPI(
+             "sync_doctopdf",
+             array(
+                 "extension"=>$extension,
+                 'relativePath'=>$relativePath,
+                 'fileName'=>$fileName
+             ),
+             \DoraRPC\DoraConst::SW_MODE_WAITRESULT
+         );
+
+         return $this->extract_sync_res($result);
+
+     }
 
 }
